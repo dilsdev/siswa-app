@@ -40,14 +40,17 @@
                             </div>
                         <div class="mb-3">
                               <label class="form-label">Kelas</label>
-                              <input type="text" name="class" class="form-control  
-                              @error('class')
-                              is-invalid
-                              @enderror" placeholder="Kelas" value="{{ old('class') }}">
+                              <select name="student_class_id" type="text" class="form-select tomselected " id="select-users" value="" tabindex="-1">
+                              {{-- <select class=""> --}}
+                                @foreach($classes as $class)
+                                    <option value="{{ $class->id }}">{{ $class->name }}</option>
+                                @endforeach
+                              </select>
                               @error('class')
                                   <span class="invalid-feedback">{{ $message }}</span>
                               @enderror
                             </div>
+
                             <div class="mb-3">
                               <label class="form-label">Foto</label>
                               <input type="file" name="photo" class="form-control 

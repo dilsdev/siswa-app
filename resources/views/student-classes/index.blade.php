@@ -5,7 +5,7 @@
     $preTitle = 'Semua Data';
 @endphp
 @push('page-actions')
-    <a href="{{ route('students.create') }}" class="btn btn-primary">Tambah Data</a>
+    <a href="{{ route('student-classes.create') }}" class="btn btn-primary">Tambah Data</a>
 @endpush
 @section('content')
     <div class="card">
@@ -14,26 +14,20 @@
                       <thead>
                         <tr>
                           <th>Name</th>
-                          <th>Address</th>
-                          <th>Phone number</th>
-                          <th>Class</th>
-                          <th>Foto</th>
+                          <th>Slug</th>
                           <th class="w-1"></th>
                         </tr>
                       </thead>
                       <tbody>
-                        @foreach ($students as $student)
+                        @foreach ($classes as $class)
                         <tr>
-                          <td>{{ $student->name }}</td>
-                          <td>{{ $student->address }}</td>
-                          <td>{{ $student->phone_number }}</td>
-                          <td>{{ $student->studentClass->name }}</td>
                           <td>
-                              <img src="{{ asset('storage/'. $student->photo) }}" height="150" alt="">
+                            <a href="{{ route('student-classes.show', $class) }}">{{ $class->name }}</a>
                           </td>
+                          <td>{{ $class->slug }}</td>
                           <td>
-                            <a href="{{ route('students.edit', $student->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                            <form action="{{ route('students.destroy', $student->id) }}" method="POST">
+                            <a href="{{ route('student-classes.edit', $class->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                            <form action="{{ route('student-classes.destroy', $class->id) }}" method="POST">
                             @csrf
                             @method('delete')
                             <input type="submit" value="Hapus" class="btn btn-danger btn-sm">

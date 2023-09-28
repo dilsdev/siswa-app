@@ -1,12 +1,9 @@
 @extends('template.default')
 
 @php
-    $title = 'Data Diswa';
+    $title = 'Data Siswa Kelas ' . $class->name;
     $preTitle = 'Semua Data';
 @endphp
-@push('page-actions')
-    <a href="{{ route('students.create') }}" class="btn btn-primary">Tambah Data</a>
-@endpush
 @section('content')
     <div class="card">
                   <div class="table-responsive">
@@ -22,12 +19,12 @@
                         </tr>
                       </thead>
                       <tbody>
-                        @foreach ($students as $student)
+                        @foreach ($class->students as $student)
                         <tr>
                           <td>{{ $student->name }}</td>
                           <td>{{ $student->address }}</td>
                           <td>{{ $student->phone_number }}</td>
-                          <td>{{ $student->studentClass->name }}</td>
+                          <td>{{ $class->name }}</td>
                           <td>
                               <img src="{{ asset('storage/'. $student->photo) }}" height="150" alt="">
                           </td>

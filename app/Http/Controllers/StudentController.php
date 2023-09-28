@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Student;
+use App\Models\StudentClass;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -16,7 +17,9 @@ class StudentController extends Controller
     }
     public function create()
     {
-        return view('students.create');
+        return view('students.create', [
+            'classes' => StudentClass::get(),
+        ]);
     }
     public function store(Request $request)
     {
@@ -24,7 +27,6 @@ class StudentController extends Controller
             'name'=>['required', 'min:3'],
             'address'=>['required', 'min:5'],
             'phone_number'=>['required', 'numeric'],
-            'class'=>['required'],
             'photo'=>['image'],
         ]);
 
@@ -39,7 +41,7 @@ class StudentController extends Controller
         $student->name = $request->name;
         $student->address = $request->address;
         $student->phone_number = $request->phone_number;
-        $student->class = $request->class;
+        $student->student_class_id = $request->student_class_id;
         $student->photo = $photo;
 
         $student->save();
@@ -53,6 +55,7 @@ class StudentController extends Controller
 
         return view('students.edit', [
             'student' => $student,
+            'classes' => StudentClass::get(),
         ]);
     }
     public function update(Request $request, $id)
@@ -61,16 +64,17 @@ class StudentController extends Controller
             'name' => ['required', 'min:3'],
             'address' => ['required', 'min:5'],
             'phone_number' => ['required', 'numeric'],
-            'class' => ['required'],
         ]);
         $student = Student::find($id);
 
-        $photo = null;
+        $photo = $student->photo;
 
         if ($request->hasFile('photo')) {
             // !!!!!!!! untuk mengahapus foto yang di ubah
-            // if(Storage::exists($student->photo)) {
-            //     Storage::delete($student->photo);
+            // if($photo != null){
+            // if(Storage::exists($photo)) {
+            //     Storage::delete($photo);
+            // }
             // }
             $photo = $request->file('photo')->store('photos');
         }
@@ -78,7 +82,7 @@ class StudentController extends Controller
         $student->name = $request->name;
         $student->address = $request->address;
         $student->phone_number = $request->phone_number;
-        $student->class = $request->class;
+        $student->student_class_id = $request->student_class_id;
         $student->photo = $photo;
 
         $student->save();

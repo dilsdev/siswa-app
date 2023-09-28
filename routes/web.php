@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
-use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\StudentClassController;
 use App\Models\Student;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
@@ -30,6 +30,7 @@ Route::get('/', function () {
 // Route::delete('/students/{id}', [StudentController::class, 'destroy'])->name('students.destroy');
 
 Route::resource('students', StudentController::class)->middleware('auth');
+Route::resource('student-classes', StudentClassController::class)->middleware('auth');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
